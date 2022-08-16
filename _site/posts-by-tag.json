@@ -6,6 +6,8 @@
   "tag" : "artificial intelligence",
   "posts" : [
       
+      "./ssh-quick-guide.html",
+      
       "./AI-and-intellectual-property.html",
       
       "./back-to-basics.html",
@@ -38,6 +40,10 @@
   "tag" : "copyright",
   "posts" : [
       
+      "./kasm-setup.html",
+      
+      "./ssh-quick-guide.html",
+      
       "./AI-and-intellectual-property.html"
       
     ]
@@ -47,6 +53,10 @@
   {
   "tag" : "creativity",
   "posts" : [
+      
+      "./kasm-setup.html",
+      
+      "./ssh-quick-guide.html",
       
       "./AI-and-intellectual-property.html"
       
@@ -88,6 +98,8 @@
   "tag" : "machine learning",
   "posts" : [
       
+      "./ssh-quick-guide.html",
+      
       "./AI-and-intellectual-property.html",
       
       "./back-to-basics.html",
@@ -107,6 +119,8 @@
   {
   "tag" : "neural networks",
   "posts" : [
+      
+      "./ssh-quick-guide.html",
       
       "./AI-and-intellectual-property.html",
       
@@ -159,6 +173,16 @@
   "posts" : [
       
       "./starting-the-adventure.html"
+      
+    ]
+  } ,
+    
+      
+  {
+  "tag" : "virtual machine",
+  "posts" : [
+      
+      "./kasm-setup.html"
       
     ]
   } 

@@ -1,0 +1,160 @@
+I"3<h2 id="generate-new-ssh-key">Generate new SSH Key</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh-keygen <span class="nt">-t</span> rsa <span class="nt">-b</span> 4096 <span class="nt">-C</span> <span class="s2">"name@email.com"</span>
+    ~/.ssh/id_rsa
+    ~/.ssh/id-rsa.pub
+
+    <span class="c"># (optional passphrase and name)</span>
+</code></pre></div></div>
+
+<h2 id="add-new-key-to-ssh-agent">Add new key to ssh-agent</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">eval</span> <span class="si">$(</span>ssh-agent <span class="nt">-s</span><span class="si">)</span>
+<span class="o">(</span><span class="nv">$ </span><span class="nb">eval</span> <span class="sb">`</span>ssh-agent <span class="nt">-s</span><span class="sb">`</span><span class="o">)</span> 
+    Agent pid 12345
+
+<span class="nv">$ </span>ssh-add ~/.ssh/id_rsa
+</code></pre></div></div>
+
+<h4 id="for-windows-open-powershell-as-administrator">For Windows, open PowerShell as Administrator</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Add-WindowsCapability <span class="nt">-Online</span> <span class="nt">-Name</span> OpenSSH.Client<span class="k">*</span>
+</code></pre></div></div>
+
+<p>OR</p>
+
+<ol>
+  <li>Open <strong>Manage Optional Features</strong></li>
+  <li><strong>Add a Feature</strong></li>
+  <li>Search for <strong>OpenSSH</strong> and install
+<br /></li>
+</ol>
+
+<p>THEN</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>key-gen <span class="nt">-t</span> rsa <span class="nt">-b</span> 4096 <span class="nt">-C</span> <span class="s2">"name@email.com"</span>
+    <span class="c"># C:\Users\user/.ssh/id_rsa</span>
+    <span class="c"># C:\Users\user/.ssh/id_rsa.pub</span>
+<span class="nv">$ </span>New-Item <span class="nt">-Path</span> <span class="s1">'C:/Users/user/.ssh/config'</span> <span class="nt">-ItemType</span> File
+</code></pre></div></div>
+
+<h2 id="copy-ssh-key-to-remote">Copy SSH key to remote</h2>
+
+<h4 id="use-ssh-copy-id-mac-only">Use ssh-copy-id (Mac Only)</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>ssh-copy-id
+ssh-copy-id demo@192.168.1.1
+</code></pre></div></div>
+
+<h4 id="alternatively">Alternatively</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># (remote machine)</span>
+<span class="nv">$ </span><span class="nb">sudo </span>nano ~/.ssh/authorized_keys
+<span class="c"># (paste pub key here)</span>
+
+<span class="c"># (local machine)</span>
+<span class="nv">$ </span><span class="nb">cat</span> -/.ssh/id_rsa.pub | ssh demo@192.168.1.1 <span class="s2">"mkdir -p -/.ssh &amp;&amp; chmod 700 -/.ssh </span><span class="nv">$$</span><span class="s2"> cat &gt;&gt; ~/.ssh/authorized_keys"</span>
+</code></pre></div></div>
+
+<h2 id="configure-local-ssh-profile">Configure local SSH profile</h2>
+
+<p>Add to <strong>~/.ssh/config</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Host GitHub
+    Hostname github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa
+
+Host Raspberry
+    Hostname 192.168.1.1
+    User pi
+    IdentityFile ~/.ssh/id_rsa
+</code></pre></div></div>
+
+<h2 id="disable-password-login">Disable Password Login</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nano /etc/ssh/sshd_config
+</code></pre></div></div>
+
+<p>Change the following settings:</p>
+
+<ul>
+  <li>“ChallengeResponseAuthentication no”</li>
+  <li>“PasswordAuthentication no”</li>
+  <li>“UsePAM no”</li>
+  <li>“PermitRootLogin no”</li>
+</ul>
+
+<hr />
+
+<p><br /></p>
+
+<h2 id="scp-file-transfer">SCP file transfer</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># from local to remote</span>
+<span class="nv">$ </span>scp ~/file.txt user@remote:~/file.txt
+
+<span class="c"># from remote to local </span>
+<span class="nv">$ </span>scp user@remote:/file.txt ~/file.txt
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="ssh-tunneling--port-forwarding">SSH Tunneling / Port Forwarding</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh username@remote-server <span class="nt">-L</span> 5901:localhost:5900
+
+<span class="nv">$ </span>ssh username@remote-server <span class="nt">-R</span> 5900:remote-server:5901
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="common-commands">Common Commands</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># (Directories)</span>
+<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-lah</span>
+<span class="nv">$ </span><span class="nb">cd</span> /etc/
+<span class="nv">$ </span><span class="nb">cd</span> ~/Documents
+<span class="nv">$ </span><span class="nb">mkdir</span>
+<span class="nv">$ </span><span class="nb">rmdir</span>
+<span class="nv">$ </span><span class="nb">rm</span> <span class="nt">-r</span>
+<span class="nv">$ </span><span class="nb">pwd</span>
+<span class="nv">$ </span><span class="nb">cp</span>
+<span class="nv">$ </span><span class="nb">mv</span>
+
+<span class="c"># (Network)</span>
+<span class="nv">$ </span>nano /etc/dhcpcd.conf
+<span class="nv">$ </span>nano /etc/netplan/
+<span class="nv">$ </span>nmtui 
+<span class="nv">$ </span>nmcli connection show
+        <span class="o">[</span>up/down] wlan0
+        networking <span class="o">[</span>on/off]
+        status
+        radio wifi <span class="o">[</span>on/off]
+<span class="nv">$ </span>ifconfig
+<span class="nv">$ </span>ip a
+<span class="nv">$ </span>curl ifconfig.io 
+
+<span class="c"># Services</span>
+<span class="nv">$ </span>service ssh <span class="o">[</span>status/start/stop/restart]
+<span class="nv">$ </span>systemctl <span class="o">[</span>status/start/stop/restart] sshd
+<span class="nv">$ </span>/etc/init.d/ssh reload
+
+<span class="c"># Alias</span>
+<span class="nv">$nano</span> ~/.bashrc
+    <span class="nb">alias </span>la <span class="o">=</span> <span class="s2">"ls -a"</span>
+
+<span class="nv">$ </span><span class="nb">df</span> <span class="nt">-h</span>
+<span class="nv">$ </span>fdisk
+
+<span class="c"># Users</span>
+<span class="nv">$ </span>adduser user
+<span class="nv">$ </span>usermod <span class="nt">-aG</span> <span class="nb">sudo </span>user
+<span class="nv">$ </span>deluser user
+<span class="nv">$ </span><span class="nb">who</span>
+<span class="nv">$ </span><span class="nb">sudo </span>su
+<span class="nv">$ </span>passwd user
+
+</code></pre></div></div>
+:ET
