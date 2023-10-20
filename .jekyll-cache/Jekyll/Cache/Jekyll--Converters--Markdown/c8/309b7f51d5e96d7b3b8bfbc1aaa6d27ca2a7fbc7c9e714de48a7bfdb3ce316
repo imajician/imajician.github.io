@@ -1,0 +1,126 @@
+I"i<h2 id="preparation">Preparation</h2>
+<hr />
+
+<p><a href="https://docs.docker.com/get-docker/">Official Installation Page</a></p>
+
+<p><a href="https://docs.portainer.io/contribute/build/mac">Portainer Installation</a></p>
+
+<p><br /></p>
+
+<h2 id="installation">Installation</h2>
+<hr />
+<ul>
+  <li>Standard installation
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>ca-certificates curl gnupg lsb-release <span class="nt">-y</span>
+<span class="nv">$ </span>curl <span class="nt">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg | <span class="nb">sudo </span>gpg <span class="nt">--dearmor</span> <span class="nt">-o</span> /usr/share/keyrings/docker-archive-keyring.gpg
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"deb [arch=</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2"> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> stable"</span> | <span class="nb">sudo tee</span> /etc/apt/sources.list.d/docker.list <span class="o">&gt;</span> /dev/null
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>docker-ce docker-ce-cli containerd.io
+<span class="nv">$ </span><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker <span class="nv">$USER</span>
+</code></pre></div>    </div>
+  </li>
+  <li>MacOS Installation with Homebrew:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew <span class="nb">install</span> <span class="nt">--cask</span> docker
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h2 id="portainer">Portainer</h2>
+<hr />
+
+<h3 id="build-and-deploy-container">Build and Deploy Container</h3>
+
+<ol>
+  <li>Create persistent volum:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker volume create portainer_data
+</code></pre></div>    </div>
+  </li>
+  <li>Deploy container:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">-p</span> 8000:8000 <span class="nt">-p</span> 9000:9000 <span class="nt">--name</span><span class="o">=</span>portainer <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> portainer_data:/data portainer/portainer
+</code></pre></div>    </div>
+  </li>
+  <li>URL:
+    <blockquote>
+      <p>http://localhost:9000</p>
+    </blockquote>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h3 id="update">Update</h3>
+<ol>
+  <li>Remove old version:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps <span class="nt">-a</span> | portainer
+<span class="nv">$ </span>docker stop 0eab
+<span class="nv">$ </span>docker <span class="nb">rm </span>0eab
+</code></pre></div>    </div>
+  </li>
+  <li>Install new version:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker pull portainer/portainer-ce:latest
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">-p</span> 8000:8000 <span class="nt">-p</span> 9443:9443 <span class="nt">--name</span><span class="o">=</span>portainer <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> portainer_data:/data portainer/portainer-ce
+</code></pre></div>    </div>
+  </li>
+  <li>URL:
+    <blockquote>
+      <p>http://localhost:9443</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h3 id="acquire-private-certificate-for-kasm-workspaces">Acquire private certificate for Kasm Workspaces</h3>
+
+<ol>
+  <li>Generate private key:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl genrsa <span class="nt">-out</span> kasm.rpi.key 2048
+</code></pre></div>    </div>
+  </li>
+  <li>Create Certificate Signing Request (CSR):
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl req <span class="nt">-new</span> <span class="nt">-key</span> kasm.rpi.key <span class="nt">-out</span> kasm.rpi.csr
+</code></pre></div>    </div>
+  </li>
+  <li>Create ext file (kasm.rpi.ext) to supply during making a signing request.
+    <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = kasm.rpi
+</code></pre></div>    </div>
+  </li>
+  <li>Create signed certificate for the Kasm:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>openssl x509 <span class="nt">-req</span> <span class="nt">-in</span> kasm.rpi.csr <span class="nt">-CA</span> majician-ca.pem <span class="nt">-CAkey</span> majician-ca.key <span class="nt">-CAcreateserial</span> <span class="nt">-out</span> kasm.rpi.crt <span class="nt">-days</span> 730 <span class="nt">-sha256</span> <span class="nt">-extfile</span> kasm.rpi.ext
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<ul>
+  <li>Now you have the CRT certificate that can be used in application.
+    <blockquote>
+      <p>You may notice that additional SRL file for Root CA is created. It is required by OpenSSL to track serial number of generated certificates - read more about it here.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h3 id="upload-certificates-to-kasm-and-endpoints">Upload certificates to Kasm and endpoints</h3>
+
+<ol>
+  <li>SSH into Kasm server and replace certificate and the private key:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo</span> /opt/kasm/bin/stop
+<span class="nv">$ </span><span class="nb">sudo cp</span> ~/.certs/kasm.rpi.crt /opt/kasm/current/certs/kasm_nginx.crt
+<span class="nv">$ </span><span class="nb">sudo cp</span> ~/.certs/kasm.rpi.key /opt/kasm/current/certs/kasm_nginx.key
+<span class="nv">$ </span><span class="nb">sudo</span> /opt/kasm/bin/start
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Copy CA Root Certificate to the systems that will be using the Kasm Workspaces. It depends on the system, but on Windows - double-click the certificate and import it to Local Machine (or Current User) in Trusted Root Certification Authorities.</p>
+  </li>
+  <li>Change hosts entry (on endpoint) to point chosen Kasm address to the IP address.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>192.168.1.100 kasm.rpi
+</code></pre></div>    </div>
+  </li>
+  <li>Changing the Upstream Auth Address for the default zone to the local IP address.</li>
+</ol>
+
+:ET

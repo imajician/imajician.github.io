@@ -40,6 +40,8 @@
   "tag" : "copyright",
   "posts" : [
       
+      "./docker-setup.html",
+      
       "./kasm-setup.html",
       
       "./ssh-quick-guide.html",
@@ -53,6 +55,8 @@
   {
   "tag" : "creativity",
   "posts" : [
+      
+      "./docker-setup.html",
       
       "./kasm-setup.html",
       
@@ -181,6 +185,8 @@
   {
   "tag" : "virtual machine",
   "posts" : [
+      
+      "./docker-setup.html",
       
       "./kasm-setup.html"
       

@@ -1,6 +1,8 @@
 {
   "posts" : [
     
+    "./docker-setup.html",
+    
     "./kasm-setup.html",
     
     "./ssh-quick-guide.html",

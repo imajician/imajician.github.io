@@ -1,4 +1,73 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-17T04:46:25+10:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Start From Scratch</title><subtitle>Computer Stuff.</subtitle><author><name>Imajician</name></author><entry><title type="html">Kasm Quick Guide</title><link href="http://localhost:4000/kasm-setup.html" rel="alternate" type="text/html" title="Kasm Quick Guide" /><published>2022-08-15T00:00:00+10:00</published><updated>2022-08-15T00:00:00+10:00</updated><id>http://localhost:4000/kasm-setup</id><content type="html" xml:base="http://localhost:4000/kasm-setup.html"><![CDATA[<h2 id="preparation">Preparation</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-10-19T20:25:02-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Minimum Viable Model</title><subtitle>Computer Stuff.</subtitle><author><name>Imajician</name></author><entry><title type="html">Docker Setup Guide</title><link href="http://localhost:4000/docker-setup.html" rel="alternate" type="text/html" title="Docker Setup Guide" /><published>2023-10-19T00:00:00-07:00</published><updated>2023-10-19T00:00:00-07:00</updated><id>http://localhost:4000/docker-setup</id><content type="html" xml:base="http://localhost:4000/docker-setup.html"><![CDATA[<h2 id="preparation">Preparation</h2>
+<hr />
+
+<p><a href="https://docs.docker.com/get-docker/">Official Installation Page</a></p>
+
+<p><a href="https://docs.portainer.io/contribute/build/mac">Portainer Installation</a></p>
+
+<p><br /></p>
+
+<h2 id="installation">Installation</h2>
+<hr />
+<ul>
+  <li>Standard installation
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>ca-certificates curl gnupg lsb-release <span class="nt">-y</span>
+<span class="nv">$ </span>curl <span class="nt">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg | <span class="nb">sudo </span>gpg <span class="nt">--dearmor</span> <span class="nt">-o</span> /usr/share/keyrings/docker-archive-keyring.gpg
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"deb [arch=</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2"> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> stable"</span> | <span class="nb">sudo tee</span> /etc/apt/sources.list.d/docker.list <span class="o">&gt;</span> /dev/null
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>docker-ce docker-ce-cli containerd.io
+<span class="nv">$ </span><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker <span class="nv">$USER</span>
+</code></pre></div>    </div>
+  </li>
+  <li>MacOS Installation with Homebrew:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew <span class="nb">install</span> <span class="nt">--cask</span> docker
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h2 id="portainer">Portainer</h2>
+<hr />
+
+<h3 id="build-and-deploy-container">Build and Deploy Container</h3>
+
+<ol>
+  <li>Create persistent volum:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker volume create portainer_data
+</code></pre></div>    </div>
+  </li>
+  <li>Deploy container:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">-p</span> 8000:8000 <span class="nt">-p</span> 9000:9000 <span class="nt">--name</span><span class="o">=</span>portainer <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> portainer_data:/data portainer/portainer
+</code></pre></div>    </div>
+  </li>
+  <li>URL:
+    <blockquote>
+      <p>http://localhost:9000</p>
+    </blockquote>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h3 id="update">Update</h3>
+<ol>
+  <li>Remove old version:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps <span class="nt">-a</span> | portainer
+<span class="nv">$ </span>docker stop 0eab
+<span class="nv">$ </span>docker <span class="nb">rm </span>0eab
+</code></pre></div>    </div>
+  </li>
+  <li>Install new version:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker pull portainer/portainer-ce:latest
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">-p</span> 8000:8000 <span class="nt">-p</span> 9443:9443 <span class="nt">--name</span><span class="o">=</span>portainer <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> portainer_data:/data portainer/portainer-ce
+</code></pre></div>    </div>
+  </li>
+  <li>URL:
+    <blockquote>
+      <p>http://localhost:9443</p>
+    </blockquote>
+  </li>
+</ol>]]></content><author><name>Imajician</name></author><category term="virtual machine" /><category term="copyright" /><category term="creativity" /><category term="virtual machine" /><summary type="html"><![CDATA[Quick guide to set up docker]]></summary></entry><entry><title type="html">Kasm Quick Guide</title><link href="http://localhost:4000/kasm-setup.html" rel="alternate" type="text/html" title="Kasm Quick Guide" /><published>2022-08-15T00:00:00-07:00</published><updated>2022-08-15T00:00:00-07:00</updated><id>http://localhost:4000/kasm-setup</id><content type="html" xml:base="http://localhost:4000/kasm-setup.html"><![CDATA[<h2 id="preparation">Preparation</h2>
 <hr />
 
 <p><a href="https://kasmweb.com/docs/latest/install/single_server_install.html">Official Installation Page</a></p>
@@ -166,7 +235,7 @@ DNS.1 = kasm.rpi
 </code></pre></div>    </div>
   </li>
   <li>Changing the Upstream Auth Address for the default zone to the local IP address.</li>
-</ol>]]></content><author><name>Imajician</name></author><category term="virtual machine" /><category term="copyright" /><category term="creativity" /><category term="virtual machine" /><summary type="html"><![CDATA[Quick guide to set up Kasm]]></summary></entry><entry><title type="html">SSH Quick Guide</title><link href="http://localhost:4000/ssh-quick-guide.html" rel="alternate" type="text/html" title="SSH Quick Guide" /><published>2022-04-10T00:00:00+10:00</published><updated>2022-04-10T00:00:00+10:00</updated><id>http://localhost:4000/ssh-quick-guide</id><content type="html" xml:base="http://localhost:4000/ssh-quick-guide.html"><![CDATA[<h2 id="generate-new-ssh-key">Generate new SSH Key</h2>
+</ol>]]></content><author><name>Imajician</name></author><category term="virtual machine" /><category term="copyright" /><category term="creativity" /><category term="virtual machine" /><summary type="html"><![CDATA[Quick guide to set up Kasm]]></summary></entry><entry><title type="html">SSH Quick Guide</title><link href="http://localhost:4000/ssh-quick-guide.html" rel="alternate" type="text/html" title="SSH Quick Guide" /><published>2022-04-10T00:00:00-07:00</published><updated>2022-04-10T00:00:00-07:00</updated><id>http://localhost:4000/ssh-quick-guide</id><content type="html" xml:base="http://localhost:4000/ssh-quick-guide.html"><![CDATA[<h2 id="generate-new-ssh-key">Generate new SSH Key</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ssh-keygen <span class="nt">-t</span> rsa <span class="nt">-b</span> 4096 <span class="nt">-C</span> <span class="s2">"name@email.com"</span>
     ~/.ssh/id_rsa
@@ -324,7 +393,7 @@ Host Raspberry
 <span class="nv">$ </span><span class="nb">sudo </span>su
 <span class="nv">$ </span>passwd user
 
-</code></pre></div></div>]]></content><author><name>Imajician</name></author><category term="opinion" /><category term="copyright" /><category term="creativity" /><category term="neural networks" /><category term="machine learning" /><category term="artificial intelligence" /><summary type="html"><![CDATA[Quick guide to set up SSH]]></summary></entry><entry><title type="html">Who owns the copyright for an AI generated creative work?</title><link href="http://localhost:4000/AI-and-intellectual-property.html" rel="alternate" type="text/html" title="Who owns the copyright for an AI generated creative work?" /><published>2021-04-20T00:00:00+10:00</published><updated>2021-04-20T00:00:00+10:00</updated><id>http://localhost:4000/AI-and-intellectual-property</id><content type="html" xml:base="http://localhost:4000/AI-and-intellectual-property.html"><![CDATA[<p>Recently I was <a href="https://www.rollingstone.com/music/music-features/nirvana-kurt-cobain-ai-song-1146444/">reading an article</a> about a cool project that intends to have a neural network create songs of the late club of the 27 (artists that have tragically died at age 27 or near, and in the height of their respective careers), artists such as Amy Winehouse, Jimmy Hendrix, Curt Cobain and Jim Morrison.</p>
+</code></pre></div></div>]]></content><author><name>Imajician</name></author><category term="opinion" /><category term="copyright" /><category term="creativity" /><category term="neural networks" /><category term="machine learning" /><category term="artificial intelligence" /><summary type="html"><![CDATA[Quick guide to set up SSH]]></summary></entry><entry><title type="html">Who owns the copyright for an AI generated creative work?</title><link href="http://localhost:4000/AI-and-intellectual-property.html" rel="alternate" type="text/html" title="Who owns the copyright for an AI generated creative work?" /><published>2021-04-20T00:00:00-07:00</published><updated>2021-04-20T00:00:00-07:00</updated><id>http://localhost:4000/AI-and-intellectual-property</id><content type="html" xml:base="http://localhost:4000/AI-and-intellectual-property.html"><![CDATA[<p>Recently I was <a href="https://www.rollingstone.com/music/music-features/nirvana-kurt-cobain-ai-song-1146444/">reading an article</a> about a cool project that intends to have a neural network create songs of the late club of the 27 (artists that have tragically died at age 27 or near, and in the height of their respective careers), artists such as Amy Winehouse, Jimmy Hendrix, Curt Cobain and Jim Morrison.</p>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tjzOzuKQhSM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 
@@ -355,7 +424,7 @@ Host Raspberry
 <tweet>Perhaps a new model for remunerating creative work can be established, one that does not require commercial success to be necessary for artists to make a living.</tweet>
 
 <p><img src="./assets/img/posts/20210420/post8-rembrandt2.jpg" alt="The next Rembrandt" />
-<small><a href="https://www.jwt.com/en/work/thenextrembrandt">The Next Rembrandt</a> is a computer-generated 3-D–printed painting developed by a facial-recognition algorithm that scanned data from 346 known paintings by the Dutch painter in a process lasting 18 months. The portrait is based on 168,263 fragments from Rembrandt’s works.</small></p>]]></content><author><name>Armando Maynez</name></author><category term="opinion" /><category term="copyright" /><category term="creativity" /><category term="neural networks" /><category term="machine learning" /><category term="artificial intelligence" /><summary type="html"><![CDATA[As neural networks are used more and more in the creative process, text, images and even music are now created by AI, but who owns the copyright for those works?]]></summary></entry><entry><title type="html">So, what is a neural network?</title><link href="http://localhost:4000/back-to-basics.html" rel="alternate" type="text/html" title="So, what is a neural network?" /><published>2021-04-02T00:00:00+10:00</published><updated>2021-04-02T00:00:00+10:00</updated><id>http://localhost:4000/back-to-basics</id><content type="html" xml:base="http://localhost:4000/back-to-basics.html"><![CDATA[<p>The omnipresence of technology nowadays has made it commonplace to read news about AI, just a quick glance at today’s headlines, and I get:</p>
+<small><a href="https://www.jwt.com/en/work/thenextrembrandt">The Next Rembrandt</a> is a computer-generated 3-D–printed painting developed by a facial-recognition algorithm that scanned data from 346 known paintings by the Dutch painter in a process lasting 18 months. The portrait is based on 168,263 fragments from Rembrandt’s works.</small></p>]]></content><author><name>Armando Maynez</name></author><category term="opinion" /><category term="copyright" /><category term="creativity" /><category term="neural networks" /><category term="machine learning" /><category term="artificial intelligence" /><summary type="html"><![CDATA[As neural networks are used more and more in the creative process, text, images and even music are now created by AI, but who owns the copyright for those works?]]></summary></entry><entry><title type="html">So, what is a neural network?</title><link href="http://localhost:4000/back-to-basics.html" rel="alternate" type="text/html" title="So, what is a neural network?" /><published>2021-04-02T00:00:00-07:00</published><updated>2021-04-02T00:00:00-07:00</updated><id>http://localhost:4000/back-to-basics</id><content type="html" xml:base="http://localhost:4000/back-to-basics.html"><![CDATA[<p>The omnipresence of technology nowadays has made it commonplace to read news about AI, just a quick glance at today’s headlines, and I get:</p>
 <ul>
   <li><a href="https://www.morningbrew.com/emerging-tech/stories/2021/03/29/one-biggest-advancements-ai-also-sparked-fierce-debate-heres?utm_source=morning_brew">This Powerful AI Technique Led to Clashes at Google and Fierce Debate in Tech.</a></li>
   <li><a href="https://fortune.com/2021/04/02/ai-forecasting-supply-chain-factories-caterpillar-agco/">How A.I.-powered companies dodged the worst damage from COVID</a></li>
@@ -460,7 +529,7 @@ Host Raspberry
 
 <p>Of course Amazon’s Alexa neural networks have undergone quite a lot of training to get to the level where they are, the beauty is that once trained, to perform their magic they just need a few mathematical operations.</p>
 
-<p>As said before, I will continue to write about the basics of neural networks, the next article in the series will dive a bit deeper into the math behind a basic neural network.</p>]]></content><author><name>Armando Maynez</name></author><category term="theory" /><category term="neural networks" /><category term="machine learning" /><category term="artificial intelligence" /><summary type="html"><![CDATA[ELI5: what is a neural network.]]></summary></entry><entry><title type="html">Starting the adventure</title><link href="http://localhost:4000/starting-the-adventure.html" rel="alternate" type="text/html" title="Starting the adventure" /><published>2021-03-24T00:00:00+10:00</published><updated>2021-03-24T00:00:00+10:00</updated><id>http://localhost:4000/starting-the-adventure</id><content type="html" xml:base="http://localhost:4000/starting-the-adventure.html"><![CDATA[<p>In the midst of a global pandemic caused by the SARS-COV2 coronavirus; I decided to start blogging. I wanted to blog since a long time, I have always enjoyed writing, but many unknowns and having “no time” for it prevented me from taking it up. Things like: “I don’t really know who my target audience is”, “what would my topic or topics be?”, “I don’t think I am a world-class expert in anything”, and many more kept stopping me from setting up my own blog. Now seemed like a good time as any so with those and tons of other questions in my mind I decided it was time to start.</p>
+<p>As said before, I will continue to write about the basics of neural networks, the next article in the series will dive a bit deeper into the math behind a basic neural network.</p>]]></content><author><name>Armando Maynez</name></author><category term="theory" /><category term="neural networks" /><category term="machine learning" /><category term="artificial intelligence" /><summary type="html"><![CDATA[ELI5: what is a neural network.]]></summary></entry><entry><title type="html">Starting the adventure</title><link href="http://localhost:4000/starting-the-adventure.html" rel="alternate" type="text/html" title="Starting the adventure" /><published>2021-03-24T00:00:00-07:00</published><updated>2021-03-24T00:00:00-07:00</updated><id>http://localhost:4000/starting-the-adventure</id><content type="html" xml:base="http://localhost:4000/starting-the-adventure.html"><![CDATA[<p>In the midst of a global pandemic caused by the SARS-COV2 coronavirus; I decided to start blogging. I wanted to blog since a long time, I have always enjoyed writing, but many unknowns and having “no time” for it prevented me from taking it up. Things like: “I don’t really know who my target audience is”, “what would my topic or topics be?”, “I don’t think I am a world-class expert in anything”, and many more kept stopping me from setting up my own blog. Now seemed like a good time as any so with those and tons of other questions in my mind I decided it was time to start.</p>
 
 <p>Funnily, this is not my first post. The birth of the blog came very natural as a way to “document” my newly established pursuit for getting myself into Machine Learning. This new adventure of mine comprises several things, and if I want to succeed I need to be serious about them all:</p>
 <ul>
@@ -601,7 +670,7 @@ Host Raspberry
 
 <p>But this fix did not work for the search function, because it relies on a <code class="language-plaintext highlighter-rouge">search.json</code> file (also generated programmatically to be served as a static file), therefore when generating this file one either use the relative path for the <code class="language-plaintext highlighter-rouge">root</code> directory or for a nested directory, thus the search results will only link correctly the corresponding pages if the page where the user searched for something is in the corresponding scope.</p>
 
-<p>So the final solution was to make the whole site flat, meaning to live in a single directory. All pages and posts will live under the root directory, and by doing so, I can control how to address the relative paths for resources.</p>]]></content><author><name>Armando Maynez</name></author><category term="general blogging" /><category term="thoughts" /><category term="life" /><summary type="html"><![CDATA[Midlife career change: a disaster or an opportunity?]]></summary></entry><entry><title type="html">Deep Q Learning for Tic Tac Toe</title><link href="http://localhost:4000/deep-q-learning-tic-tac-toe.html" rel="alternate" type="text/html" title="Deep Q Learning for Tic Tac Toe" /><published>2021-03-19T07:14:20+10:00</published><updated>2021-03-19T07:14:20+10:00</updated><id>http://localhost:4000/deep-q-learning-tic-tac-toe</id><content type="html" xml:base="http://localhost:4000/deep-q-learning-tic-tac-toe.html"><![CDATA[<center><img style="float: left;margin-right: 1em;" src="./assets/img/posts/20210318/Game_Screen.png" width="310" height="300" /></center>
+<p>So the final solution was to make the whole site flat, meaning to live in a single directory. All pages and posts will live under the root directory, and by doing so, I can control how to address the relative paths for resources.</p>]]></content><author><name>Armando Maynez</name></author><category term="general blogging" /><category term="thoughts" /><category term="life" /><summary type="html"><![CDATA[Midlife career change: a disaster or an opportunity?]]></summary></entry><entry><title type="html">Deep Q Learning for Tic Tac Toe</title><link href="http://localhost:4000/deep-q-learning-tic-tac-toe.html" rel="alternate" type="text/html" title="Deep Q Learning for Tic Tac Toe" /><published>2021-03-18T14:14:20-07:00</published><updated>2021-03-18T14:14:20-07:00</updated><id>http://localhost:4000/deep-q-learning-tic-tac-toe</id><content type="html" xml:base="http://localhost:4000/deep-q-learning-tic-tac-toe.html"><![CDATA[<center><img style="float: left;margin-right: 1em;" src="./assets/img/posts/20210318/Game_Screen.png" width="310" height="300" /></center>
 
 <h2 id="background">Background</h2>
 <p>After many years of a corporate career (17) diverging from computer science, I have now decided to learn Machine Learning and in the process return to coding (something I have always loved!).</p>
@@ -845,7 +914,7 @@ Wins: 52.66% Losses: 36.02% Ties: 11.32%</small></center>
 
 <p>As of today, my best result so far is 87.5%, I will leave it rest for a while and keep investigating to find a reason for not being able to reach at least 90%. I read about <a href="https://medium.com/applied-data-science/how-to-train-ai-agents-to-play-multiplayer-games-using-self-play-deep-reinforcement-learning-247d0b440717">self play</a>, and it looks like a viable option to test and a fun coding challenge. However, before embarking in yet another big change I want to ensure I have been thorough with the model and have tested every option correctly.</p>
 
-<p>I feel the end is near… should I continue to update this post as new events unfold or shall I make it a multi post thread?</p>]]></content><author><name>Armando Maynez</name></author><category term="machine learning" /><category term="artificial intelligence" /><category term="reinforcement learning" /><category term="coding" /><category term="python" /><summary type="html"><![CDATA[Inspired by Deep Mind's astonishing feats of having their Alpha Go, Alpha Zero and Alpha Star programs learn (and be amazing at it) Go, Chess, Atari games and lately Starcraft; I set myself to the task of programming a neural network that will learn by itself how to play the ancient game of tic tac toe. How hard could it be?]]></summary></entry><entry><title type="html">Neural Network Optimization Methods and Algorithms</title><link href="http://localhost:4000/neural-network-optimization-methods.html" rel="alternate" type="text/html" title="Neural Network Optimization Methods and Algorithms" /><published>2021-03-13T05:32:20+10:00</published><updated>2021-03-13T05:32:20+10:00</updated><id>http://localhost:4000/neural-network-optimization-methods</id><content type="html" xml:base="http://localhost:4000/neural-network-optimization-methods.html"><![CDATA[<p>For the seemingly small project I undertook of <a href="./deep-q-learning-tic-tac-toe.html">creating a machine learning neural network that could learn by itself to play tic-tac-toe</a>, I bumped into the necesity of implementing at least one momentum algorithm for the optimization of the network during backpropagation.</p>
+<p>I feel the end is near… should I continue to update this post as new events unfold or shall I make it a multi post thread?</p>]]></content><author><name>Armando Maynez</name></author><category term="machine learning" /><category term="artificial intelligence" /><category term="reinforcement learning" /><category term="coding" /><category term="python" /><summary type="html"><![CDATA[Inspired by Deep Mind's astonishing feats of having their Alpha Go, Alpha Zero and Alpha Star programs learn (and be amazing at it) Go, Chess, Atari games and lately Starcraft; I set myself to the task of programming a neural network that will learn by itself how to play the ancient game of tic tac toe. How hard could it be?]]></summary></entry><entry><title type="html">Neural Network Optimization Methods and Algorithms</title><link href="http://localhost:4000/neural-network-optimization-methods.html" rel="alternate" type="text/html" title="Neural Network Optimization Methods and Algorithms" /><published>2021-03-12T11:32:20-08:00</published><updated>2021-03-12T11:32:20-08:00</updated><id>http://localhost:4000/neural-network-optimization-methods</id><content type="html" xml:base="http://localhost:4000/neural-network-optimization-methods.html"><![CDATA[<p>For the seemingly small project I undertook of <a href="./deep-q-learning-tic-tac-toe.html">creating a machine learning neural network that could learn by itself to play tic-tac-toe</a>, I bumped into the necesity of implementing at least one momentum algorithm for the optimization of the network during backpropagation.</p>
 
 <p>And since my original post for the TicTacToe project is quite large already, I decided to post separately these optimization methods and how did I implement them in my code.</p>
 
@@ -1161,7 +1230,7 @@ E[\theta^2]_t &amp;= \beta_1 E[\theta^2]_{t-1} + (1-\beta_1) \theta^2_t \\<br />
                             <span class="o">+</span> <span class="n">c</span><span class="p">.</span><span class="n">EPSILON</span><span class="p">))))</span>
 
     <span class="bp">self</span><span class="p">.</span><span class="n">gradient_zeros</span><span class="p">()</span>
-</code></pre></div></div>]]></content><author><name>Armando Maynez</name></author><category term="coding" /><category term="machine learning" /><category term="optimization" /><category term="deep Neural networks" /><summary type="html"><![CDATA[Some neural network optimization algorithms mostly to implement momentum when doing back propagation.]]></summary></entry><entry><title type="html">Machine Learning Library in Python from scratch</title><link href="http://localhost:4000/ML-Library-from-scratch.html" rel="alternate" type="text/html" title="Machine Learning Library in Python from scratch" /><published>2021-03-01T04:32:20+10:00</published><updated>2021-03-01T04:32:20+10:00</updated><id>http://localhost:4000/ML-Library-from-scratch</id><content type="html" xml:base="http://localhost:4000/ML-Library-from-scratch.html"><![CDATA[<p>It must sound crazy that in this day and age, when we have such a myriad of amazing machine learning libraries and toolkits all open sourced, all quite well documented and easy to use, I decided to create my own ML library from scratch.</p>
+</code></pre></div></div>]]></content><author><name>Armando Maynez</name></author><category term="coding" /><category term="machine learning" /><category term="optimization" /><category term="deep Neural networks" /><summary type="html"><![CDATA[Some neural network optimization algorithms mostly to implement momentum when doing back propagation.]]></summary></entry><entry><title type="html">Machine Learning Library in Python from scratch</title><link href="http://localhost:4000/ML-Library-from-scratch.html" rel="alternate" type="text/html" title="Machine Learning Library in Python from scratch" /><published>2021-02-28T10:32:20-08:00</published><updated>2021-02-28T10:32:20-08:00</updated><id>http://localhost:4000/ML-Library-from-scratch</id><content type="html" xml:base="http://localhost:4000/ML-Library-from-scratch.html"><![CDATA[<p>It must sound crazy that in this day and age, when we have such a myriad of amazing machine learning libraries and toolkits all open sourced, all quite well documented and easy to use, I decided to create my own ML library from scratch.</p>
 <center><img src="./assets/img/posts/20210228/ML_cloud.jpg" width="480px" /></center>
 <p>Let me try to explain; I am in the process of immersing myself into the world of Machine Learning, and to do so, I want to deeply understand the basic concepts and its foundations, and I think that there is no better way to do so than by creating myself all the code for a basic neural network library from scratch. This way I can gain in depth understanding of the math that underpins the ML algorithms.</p>
 
@@ -8122,7 +8191,7 @@ qXRvbwAAAB1kYXRhAAAAAQAAAABMYXZmNTguNDUuMTAw
   <li>save and load trained model to file</li>
 </ul>
 
-<p>I will get to it soon…</p>]]></content><author><name>Armando Maynez</name></author><category term="machine learning" /><category term="coding" /><category term="neural networks" /><category term="python" /><summary type="html"><![CDATA[Single neuron perceptron that classifies elements learning quite quickly.]]></summary></entry><entry><title type="html">Conway’s Game of Life</title><link href="http://localhost:4000/conways-game-of-life.html" rel="alternate" type="text/html" title="Conway’s Game of Life" /><published>2021-02-11T05:32:20+10:00</published><updated>2021-02-11T05:32:20+10:00</updated><id>http://localhost:4000/conways-game-of-life</id><content type="html" xml:base="http://localhost:4000/conways-game-of-life.html"><![CDATA[<p>I&nbsp;am lately trying to take on coding again. It had always been a part of my life since my early years when I&nbsp;learned to program a Tandy Color Computer at the age of 8, the good old days.</p>
+<p>I will get to it soon…</p>]]></content><author><name>Armando Maynez</name></author><category term="machine learning" /><category term="coding" /><category term="neural networks" /><category term="python" /><summary type="html"><![CDATA[Single neuron perceptron that classifies elements learning quite quickly.]]></summary></entry><entry><title type="html">Conway’s Game of Life</title><link href="http://localhost:4000/conways-game-of-life.html" rel="alternate" type="text/html" title="Conway’s Game of Life" /><published>2021-02-10T11:32:20-08:00</published><updated>2021-02-10T11:32:20-08:00</updated><id>http://localhost:4000/conways-game-of-life</id><content type="html" xml:base="http://localhost:4000/conways-game-of-life.html"><![CDATA[<p>I&nbsp;am lately trying to take on coding again. It had always been a part of my life since my early years when I&nbsp;learned to program a Tandy Color Computer at the age of 8, the good old days.</p>
 
 <p><img src="./assets/img/posts/20210210/300px-TRS-80_Color_Computer_3.jpg" alt="Tandy Color Computer TRS80 III" /><small>Tandy Color Computer TRS80 III</small></p>
 
@@ -8189,123 +8258,4 @@ qXRvbwAAAB1kYXRhAAAAAQAAAABMYXZmNTguNDUuMTAw
 
 <p>Notice that since I am keeping an array of the coordinates of only the cells who are alive, I could apply just 3 rules, die of loneliness, die of overpopulation and become alive from reproduction (exactly 3 alive neighbors) because the ones who have 2 or 3 neighbors and are already alive, can remain alive in the next iteration.</p>
 
-<p>I&nbsp;found it very interesting to implement the Game of Life like this, it was quite a refreshing challenge and I am beginning to feel my coding skills ramping up again.</p>]]></content><author><name>Armando Maynez</name></author><category term="coding" /><category term="python" /><summary type="html"><![CDATA[Taking on the challenge of picking up coding again through interesting small projects, this time it is the turn of Conway's Game of Life.]]></summary></entry><entry><title type="html">Single Neuron Perceptron</title><link href="http://localhost:4000/single-neuron-perceptron.html" rel="alternate" type="text/html" title="Single Neuron Perceptron" /><published>2021-01-26T05:32:20+10:00</published><updated>2021-01-26T05:32:20+10:00</updated><id>http://localhost:4000/single-neuron-perceptron</id><content type="html" xml:base="http://localhost:4000/single-neuron-perceptron.html"><![CDATA[<p>As an entry point to learning python and getting into Machine Learning, I decided to code from scratch the Hello World! of the field, a single neuron perceptron.</p>
-
-<h2 id="what-is-a-perceptron">What is a perceptron?</h2>
-
-<p>A perceptron is the basic building block of a neural network, it can be compared to a neuron, And its conception is what detonated the vast field of Artificial Intelligence nowadays.</p>
-
-<p>Back in the late 1950’s, a young <a href="https://en.wikipedia.org/wiki/Frank_Rosenblatt">Frank Rosenblatt</a> devised a very simple algorithm as a foundation to construct a machine that could learn to perform different tasks.</p>
-
-<p>In its essence, a perceptron is nothing more than a collection of values and rules for passing information through them, but in its simplicity lies its power.</p>
-
-<center><img src="./assets/img/posts/20210125/Perceptron.png" /></center>
-
-<p>Imagine you have a ‘neuron’ and to ‘activate’ it, you pass through several input signals, each signal connects to the neuron through a synapse, once the signal is aggregated in the perceptron, it is then passed on to one or as many outputs as defined. A perceptron is but a neuron and its collection of synapses to get a signal into it and to modify a signal to pass on.</p>
-
-<p>In more mathematical terms, a perceptron is an array of values (let’s call them weights), and the rules to apply such values to an input signal.</p>
-
-<p>For instance a perceptron could get 3 different inputs as in the image, lets pretend that the inputs it receives as signal are: $x_1 = 1, \; x_2 = 2\; and \; x_3 = 3$, if it’s weights are $w_1 = 0.5,\; w_2 = 1\; and \; w_3 = -1$ respectively, then what the perceptron will do when the signal is received is to multiply each input value by its corresponding weight, then add them up.</p>
-
-<p style="text-align:center">\(<br />
-\begin{align}
-\begin{split}
-\left(x_1 * w_1\right) + \left(x_2 * w_2\right) + \left(x_3 * w_3\right)
-\end{split}
-\end{align}
-\)</p>
-
-<p style="text-align:center">\(<br />
-\begin{align}<br />
-\begin{split}<br />
-\left(0.5 * 1\right) + \left(1 * 2\right) + \left(-1 * 3\right) = 0.5 + 2 - 3 = -0.5
-\end{split}<br />
-\end{align}<br />
-\)</p>
-
-<p>Typically when this value is obtained, we need to apply an “activation” function to smooth the output, but let’s say that our activation function is linear, meaning that we keep the value as it is, then that’s it, that is the output of the perceptron, -0.5.</p>
-
-<p>In a practical application, the output means something, perhaps we want our perceptron to classify a set of data and if the perceptron outputs a negative number, then we know the data is of type A, and if it is a positive number then it is of type B.</p>
-
-<p>Once we understand this, the magic starts to happen through a process called backpropagation, where we “educate” our tiny one neuron brain to have it learn how to do its job.</p>
-
-<tweet>The magic starts to happen through a process called backpropagation, where we "educate" our tiny one neuron brain to have it learn how to do its job.</tweet>
-
-<p>For this we need a set of data that it is already classified, we call this a training set. This data has inputs and their corresponding correct output. So we can tell the little brain when it misses in its prediction, and by doing so, we also adjust the weights a bit in the direction where we know the perceptron committed the mistake hoping that after many iterations like this the weights will be so that most of the predictions will be correct.</p>
-
-<p>After the model trains successfully we can have it classify data it has never seen before, and we have a fairly high confidence that it will do so correctly.</p>
-
-<p>The math behind this magical property of the perceptron is called gradient descent, and is just a bit of differential calculus that helps us convert the error the brain is having into tiny nudges of value of the weights towards their optimum. <a href="https://www.youtube.com/watch?v=aircAruvnKk&amp;list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">This video series by 3 blue 1 brown explains it wonderfuly.</a></p>
-
-<p>My program creates a single neuron neural network tuned to guess if a point is above or below a randomly generated line and generates a visualization based on graphs to see how the neural network is learning through time.</p>
-
-<p>The neuron has 3 inputs and weights to calculate its output:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>input 1 is the X coordinate of the point,
-Input 2 is the y coordinate of the point,
-Input 3 is the bias and it is always 1
-
-Input 3 or the bias is required for lines that do not cross the origin (0,0)
-</code></pre></div></div>
-
-<p>The Perceptron starts with weights all set to zero and learns by using 1,000 random points per each iteration.</p>
-
-<p>The output of the perceptron is calculated with the following activation function:
-    if x * weight_x + y weight_y + weight_bias is positive then 1 else 0</p>
-
-<p>The error for each point is calculated as the expected outcome of the perceptron minus the real outcome therefore there are only 3 possible error values:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">Expected</th>
-      <th style="text-align: center">Calculated</th>
-      <th style="text-align: center">Error</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">1</td>
-      <td style="text-align: center">-1</td>
-      <td style="text-align: center">1</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">1</td>
-      <td style="text-align: center">1</td>
-      <td style="text-align: center">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">-1</td>
-      <td style="text-align: center">-1</td>
-      <td style="text-align: center">0</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">-1</td>
-      <td style="text-align: center">1</td>
-      <td style="text-align: center">-1</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>With every point that is learned if the error is not 0 the weights are adjusted according to:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>New_weight = Old_weight + error * input * learning_rate
-for example: New_weight_x = Old_weight_x + error * x * learning rate
-</code></pre></div></div>
-
-<p>A very useful parameter in all of neural networks is teh learning rate, which is basically a measure on how tiny our nudge to the weights is going to be.</p>
-
-<p>In this particular case, I coded the learning_rate to decrease with every iteration as follows:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>learning_rate = 0.01 / (iteration + 1)
-</code></pre></div></div>
-
-<p>this is important to ensure that once the weights are nearing the optimal values the adjustment in each iteration is subsequently more subtle.</p>
-
-<center><img src="./assets/img/posts/20210125/Learning_1000_points_per_iteration.jpg" /></center>
-
-<p>In the end, the perceptron always converges into a solution and finds with great precision the line we are looking for.</p>
-
-<p>Perceptrons are quite a revelation in that they can resolve equations by learning, however they are very limited. By their nature they can only resolve linear equations, so their problem space is quite narrow.</p>
-
-<p>Nowadays the neural networks consist of combinations of many perceptrons, in many layers, and other types of “neurons”, like convolution, recurrent, etc. increasing significantly the types of problems they solve.</p>]]></content><author><name>Armando Maynez</name></author><category term="machine learning" /><category term="coding" /><category term="neural networks" /><summary type="html"><![CDATA[Single neuron perceptron that classifies elements learning quite quickly.]]></summary></entry></feed>
+<p>I&nbsp;found it very interesting to implement the Game of Life like this, it was quite a refreshing challenge and I am beginning to feel my coding skills ramping up again.</p>]]></content><author><name>Armando Maynez</name></author><category term="coding" /><category term="python" /><summary type="html"><![CDATA[Taking on the challenge of picking up coding again through interesting small projects, this time it is the turn of Conway's Game of Life.]]></summary></entry></feed>

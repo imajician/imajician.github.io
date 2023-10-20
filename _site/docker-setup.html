@@ -7,9 +7,9 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>The Minimum Viable Model</title>
-	<link rel="canonical" href="http://localhost:4000/">
-	<meta name="description" content="Computer Stuff.">
+	<title>Docker Setup Guide - The Minimum Viable Model</title>
+	<link rel="canonical" href="http://localhost:4000/docker-setup.html">
+	<meta name="description" content="Quick guide to set up docker">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 <script type="application/ld+json">
@@ -19,16 +19,16 @@
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "http://localhost:4000"},
-  "headline": "The Minimum Viable Model",
-  "abstract": "",
-    "keywords": "",
-    "wordcount": "26",
-    "image": ["http://localhost:4000/assets/img"],
-  "datePublished": "",
-  "dateModified": "",
+  "headline": "Docker Setup Guide",
+  "abstract": "Quick guide to set up docker",
+    "keywords": "copyright, creativity, virtual machine",
+    "wordcount": "144",
+    "image": ["http://localhost:4000/assets/imgposts/20231019/docker_banner.png"],
+  "datePublished": "2023-10-19 00:00:00 -0700",
+  "dateModified": "2023-10-19 00:00:00 -0700",
   "author": {
     "@type": "Person",
-    "name": ""},
+    "name": "Imajician"},
   "publisher": {
     "@type":  "Organization",
     "logo": {
@@ -40,30 +40,30 @@
 }
 </script>
 <!-- Open Graph data -->
-<meta property="og:url" content="http://localhost:4000/"/>
+<meta property="og:url" content="http://localhost:4000/docker-setup.html"/>
 <meta property="og:type" content="article"/>
-<meta property="og:title" content="The Minimum Viable Model"/>
-<meta property="og:description" content=""/>
-<meta property="og:image" content="http://localhost:4000/assets/img"/>
-<meta property="og:image:alt" content=""/>
+<meta property="og:title" content="Docker Setup Guide"/>
+<meta property="og:description" content="Quick guide to set up docker"/>
+<meta property="og:image" content="http://localhost:4000/assets/imgposts/20231019/docker_banner.png"/>
+<meta property="og:image:alt" content="Docker Setup Guide"/>
 <meta property="og:site_name" content="The Minimum Viable Model" />
-<meta property="article:published_time" content="" />
-<meta property="article:modified_time" content="" />
-<meta property="article:tag" content="" />
+<meta property="article:published_time" content="2023-10-19 00:00:00 -0700" />
+<meta property="article:modified_time" content="2023-10-19 00:00:00 -0700" />
+<meta property="article:tag" content="copyright, creativity, virtual machine" />
 <meta property="fb:admins" content="" />
 <!-- Schema.org markup for Google -->
-<meta itemprop="name" content="The Minimum Viable Model">
-<meta itemprop="description" content="">
-<meta itemprop="image" content="http://localhost:4000/assets/img">
+<meta itemprop="name" content="Docker Setup Guide">
+<meta itemprop="description" content="Quick guide to set up docker">
+<meta itemprop="image" content="http://localhost:4000/assets/imgposts/20231019/docker_banner.png">
 <!-- Twitter Card data -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="">
-<meta name="twitter:title" content="The Minimum Viable Model">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Docker Setup Guide">
+<meta name="twitter:description" content="Quick guide to set up docker">
 <meta name="twitter:creator" content="">
 <meta data-rh="true" name="twitter:label1" content="Word count"/>
-<meta data-rh="true" name="twitter:data1" content="26"/>
-<meta name="twitter:image:src" content="http://localhost:4000/assets/img/">
+<meta data-rh="true" name="twitter:data1" content="144"/>
+<meta name="twitter:image:src" content="http://localhost:4000/assets/img/posts/20231019/docker_banner.png">
 	<!-- Windows Phone -->
 	<meta name="msapplication-navbutton-color" content="#311e3e">
 	<!-- iOS Safari -->
@@ -127,10 +127,55 @@
 <link rel="apple-touch-icon" sizes="72x72" href="./assets/img/favicon/favicon.ico">
 <link rel="apple-touch-icon" sizes="114x114" href="./assets/img/favicon/favicon.ico">
 	
+	<link rel="stylesheet" href="./assets/css/highlighter/syntax-base16.monokai.dark.css">
+	
 </head>
 
   <body>
-    <div class="flex-container transparent">
+    
+
+
+
+
+<section class="hidden">
+  <div class="post">
+      <a  class="post-list-title" href="./docker-setup.html">Docker Setup Guide</a>
+      
+
+  <span class = "post-card-meta">
+  
+  
+    <span class="meta-pre"></span>
+  
+  
+    
+      
+      <span class="page_meta-date">
+        <time datetime="2023-10-19T00:00:00-07:00">October 19, 2023</time>
+      </span>
+    
+    
+      <span class="meta-sep"></span>
+    
+  
+  
+    
+    
+    <span class="page_meta-readtime">
+      
+        less than 1 minute read
+      
+    </span>
+  
+  
+  </span>
+
+        <div class="post-excerpt">
+            <h2 id="preparation">Preparation</h2><hr /><p><a href="https://docs.docker.com/get-docker/">Official Installation Page</a></p><p><a href="https://docs.portainer.io/contribute/build/mac">Portainer Installation</a></p><p><br /></p><h2 id="installation">Installation</h2><hr /><ul> <li>Standard installation <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>ca-certificates curl gnupg lsb-release <span class="nt">-y</span><span class="nv">$ </span>curl <span class="nt">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg | <span class="nb">sudo </span>gpg <span class="nt">--dearmor</span> <span class="nt">-o</span> /usr/share/keyrings/docker-archive-keyring.gpg<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"deb [arch=</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2"> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> stable"</span> | <span class="nb">sudo tee</span> /etc/apt/sources.list.d/docker.list <span class="o">&gt;</span> /dev/null<span class="nv">$ </span><span class="nb">sudo </span>apt-get update<span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>docker-ce docker-ce-cli containerd.io<span class="nv">$ </span><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker <span class="nv">$USER</span></code></pre></div> </div> </li> <li>MacOS Installation with...<a class="read-more" href="./docker-setup.html"> read more</a>
+        </div>
+  </div>
+</section>
+<div class="flex-container transparent">
   
 
 
@@ -223,32 +268,35 @@
   </div>
 </header> <!-- End Header -->
 
-  <div class="content wrapper">
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Docker Setup Guide">
+<meta itemprop="description" content="Quick guide to set up docker">
+<meta itemprop="datePublished" content="2023-10-19T00:00:00-07:00">
+
+    <div class="page-image">
+      <div class="cover-image" style="background: url('./assets/img/posts/20231019/docker_banner.png') center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">Docker Setup Guide</h1>
+          
+
+  <span class = "post-page-meta">
+  
+    <p class="page_meta">
+  
+  
+  
     
-
-
-
-<ol class="post-card-box clearfix">
-  
-  
-
-  <li>
-    <div class="post-card">
-      <a href="./docker-setup.html" title="Docker Setup Guide" class="post-card-image" style="background: url('./assets/img/posts/20231019/docker_banner.png') center no-repeat; background-size: cover;">
-      </a>
-      <div class="post-card-body">
-        <p class="post-card-title-and-meta">
-          
-          <a href="./docker-setup.html" class="post-card-link">
-          Docker Setup Guide
-          </a>
-          
-
-  <span class = "post-card-meta">
-  
-  
-    <span class="meta-pre"></span>
-  
+      
+      <span class="page_meta-date">
+        <time datetime="2023-10-19T00:00:00-07:00">October 19, 2023</time>
+      </span>
+    
+    
+      <span class="meta-sep"></span>
+    
   
   
     
@@ -260,201 +308,337 @@
     </span>
   
   
+    </p>
+  
   </span>
 
-        </p>
-      </div>
+        </div>
+        <aside class="sidebar side" id="sidebar">
+    
+
+
+
+<div class="tag-cloud">
+    
+        <ul class="tags side">
+            
+                <li><a href="./tag.html?tag=copyright" class="tag side">copyright</a></li>
+            
+                <li><a href="./tag.html?tag=creativity" class="tag side">creativity</a></li>
+            
+                <li><a href="./tag.html?tag=virtual+machine" class="tag side">virtual machine</a></li>
+            
+    
+        </ul>
+</div>
+    <div class="share-options side">
+    <div class="share-hover side">
+        <span class="share-button side"><svg fill="currentColor" width="25" height="25" class="side"><g fill-rule="evenodd"><path d="M15.6 5a.42.42 0 0 0 .17-.3.42.42 0 0 0-.12-.33l-2.8-2.79a.5.5 0 0 0-.7 0l-2.8 2.8a.4.4 0 0 0-.1.32c0 .12.07.23.16.3h.02a.45.45 0 0 0 .57-.04l2-2V10c0 .28.23.5.5.5s.5-.22.5-.5V2.93l2.02 2.02c.08.07.18.12.3.13.11.01.21-.02.3-.08v.01"></path><path d="M18 7h-1.5a.5.5 0 0 0 0 1h1.6c.5 0 .9.4.9.9v10.2c0 .5-.4.9-.9.9H6.9a.9.9 0 0 1-.9-.9V8.9c0-.5.4-.9.9-.9h1.6a.5.5 0 0 0 .35-.15A.5.5 0 0 0 9 7.5a.5.5 0 0 0-.15-.35A.5.5 0 0 0 8.5 7H7a2 2 0 0 0-2 2v10c0 1.1.9 2 2 2h11a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"></path></g></svg></span>
+        <div class="share-icons side" id="sidebar-icons">
+            <a class="twitter" href="https://twitter.com/intent/tweet?text=Docker Setup Guide&url=http://localhost:4000/docker-setup.html" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a class="facebook" href="https://facebook.com/sharer.php?u=http://localhost:4000/docker-setup.html" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:4000/docker-setup.html&title=Docker Setup Guide" title="Submit to Reddit" rel="nofollow" target="_blank"><i class="fa fa-reddit" aria-hidden="true"></i></a>
+            <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/docker-setup.html&title=Docker Setup Guide&summary=Quick guide to set up docker&source=http://localhost:4000/docker-setup.html" title="Share on LinkedIn" rel="nofollow" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a class="email" href="mailto:?subject=Docker Setup Guide&body=Quick guide to set up docker%0A%0ARead more here: http://localhost:4000/docker-setup.html" title="Share via e-mail" rel="nofollow" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+            <a class="copy-link" onclick="copyToClipboard()" title="Copy to clipboard" rel="nofollow" target="_blank"><svg width="20px" fill="currentColor" class="side" viewBox="0 0 18 18"><path d="M16.94 1.1A3.7 3.7 0 0 0 14.3 0c-1 0-1.94.39-2.64 1.1L7.43 5.3c-.91.92-2.09 3.2 0 5.27a.75.75 0 0 0 .82.16c.09-.03.17-.09.24-.15a.74.74 0 0 0 0-1.06c-1.16-1.15-.77-2.39-.02-3.16l4.24-4.22a2.2 2.2 0 0 1 1.58-.65c.6 0 1.16.23 1.58.65.86.87.86 2.29 0 3.16L12.7 8.47a.74.74 0 0 0 1.04 1.05l3.17-3.16a3.73 3.73 0 0 0 0-5.27h.03zM9.54 7.4a.74.74 0 0 0 0 1.06c1.16 1.15.76 2.39 0 3.16l-4.22 4.22c-.42.42-.99.65-1.59.65a2.23 2.23 0 0 1-1.58-3.82l3.17-3.16A.73.73 0 0 0 5.54 9a.78.78 0 0 0-.22-.52.77.77 0 0 0-1.05 0L1.1 11.64A3.72 3.72 0 0 0 3.74 18c1 0 1.94-.39 2.65-1.1l4.23-4.2c.21-.22.94-1.02 1.13-2.2.18-1.12-.2-2.15-1.12-3.07-.27-.27-.78-.27-1.06 0l-.02-.02z" clip-rule="evenodd" fill-rule="evenodd"></path></svg></a>
+        </div>
     </div>
+    <div class='alert' style='font-size:.6em;color:var(--accent);text-align:center;'></div>
+</div>
+</aside>
+
+        
+        
+        <h2 id="preparation">Preparation</h2>
+<hr />
+
+<p><a href="https://docs.docker.com/get-docker/">Official Installation Page</a></p>
+
+<p><a href="https://docs.portainer.io/contribute/build/mac">Portainer Installation</a></p>
+
+<p><br /></p>
+
+<h2 id="installation">Installation</h2>
+<hr />
+
+<ul>
+  <li>Standard installation
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>ca-certificates curl gnupg lsb-release <span class="nt">-y</span>
+<span class="nv">$ </span>curl <span class="nt">-fsSL</span> https://download.docker.com/linux/ubuntu/gpg | <span class="nb">sudo </span>gpg <span class="nt">--dearmor</span> <span class="nt">-o</span> /usr/share/keyrings/docker-archive-keyring.gpg
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"deb [arch=</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2"> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> stable"</span> | <span class="nb">sudo tee</span> /etc/apt/sources.list.d/docker.list <span class="o">&gt;</span> /dev/null
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get update
+<span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>docker-ce docker-ce-cli containerd.io
+<span class="nv">$ </span><span class="nb">sudo </span>usermod <span class="nt">-aG</span> docker <span class="nv">$USER</span>
+</code></pre></div>    </div>
   </li>
-  
-  
+  <li>MacOS Installation with Homebrew:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>brew <span class="nb">install</span> <span class="nt">--cask</span> docker
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
 
-  <li>
-    <div class="post-card">
-      <a href="./kasm-setup.html" title="Kasm Quick Guide" class="post-card-image" style="background: url('./assets/img/posts/20220816/kasm.jpeg') center no-repeat; background-size: cover;">
-      </a>
-      <div class="post-card-body">
-        <p class="post-card-title-and-meta">
+<h2 id="portainer">Portainer</h2>
+<hr />
+
+<h3 id="build-and-deploy-container">Build and Deploy Container</h3>
+
+<ol>
+  <li>Create persistent volum:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker volume create portainer_data
+</code></pre></div>    </div>
+  </li>
+  <li>Deploy container:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">-p</span> 8000:8000 <span class="nt">-p</span> 9000:9000 <span class="nt">--name</span><span class="o">=</span>portainer <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> portainer_data:/data portainer/portainer
+</code></pre></div>    </div>
+  </li>
+  <li>URL:
+    <blockquote>
+      <p>http://localhost:9000</p>
+    </blockquote>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h3 id="update">Update</h3>
+<ol>
+  <li>Remove old version:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps <span class="nt">-a</span> | portainer
+<span class="nv">$ </span>docker stop 0eab
+<span class="nv">$ </span>docker <span class="nb">rm </span>0eab
+</code></pre></div>    </div>
+  </li>
+  <li>Install new version:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker pull portainer/portainer-ce:latest
+<span class="nv">$ </span>docker run <span class="nt">-d</span> <span class="nt">-p</span> 8000:8000 <span class="nt">-p</span> 9443:9443 <span class="nt">--name</span><span class="o">=</span>portainer <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="nt">-v</span> portainer_data:/data portainer/portainer-ce
+</code></pre></div>    </div>
+  </li>
+  <li>URL:
+    <blockquote>
+      <p>http://localhost:9443</p>
+    </blockquote>
+  </li>
+</ol>
+
+
+        <aside class="sidebar inline" id="post-end">
+    
+
+
+
+<div class="tag-cloud">
+    
+        <ul class="tags inline">
+            
+                <li><a href="./tag.html?tag=copyright" class="tag inline">copyright</a></li>
+            
+                <li><a href="./tag.html?tag=creativity" class="tag inline">creativity</a></li>
+            
+                <li><a href="./tag.html?tag=virtual+machine" class="tag inline">virtual machine</a></li>
+            
+    
+        </ul>
+</div>
+    <div class="share-options inline">
+    <div class="share-hover inline">
+        <span class="share-button inline"><svg fill="currentColor" width="25" height="25" class="inline"><g fill-rule="evenodd"><path d="M15.6 5a.42.42 0 0 0 .17-.3.42.42 0 0 0-.12-.33l-2.8-2.79a.5.5 0 0 0-.7 0l-2.8 2.8a.4.4 0 0 0-.1.32c0 .12.07.23.16.3h.02a.45.45 0 0 0 .57-.04l2-2V10c0 .28.23.5.5.5s.5-.22.5-.5V2.93l2.02 2.02c.08.07.18.12.3.13.11.01.21-.02.3-.08v.01"></path><path d="M18 7h-1.5a.5.5 0 0 0 0 1h1.6c.5 0 .9.4.9.9v10.2c0 .5-.4.9-.9.9H6.9a.9.9 0 0 1-.9-.9V8.9c0-.5.4-.9.9-.9h1.6a.5.5 0 0 0 .35-.15A.5.5 0 0 0 9 7.5a.5.5 0 0 0-.15-.35A.5.5 0 0 0 8.5 7H7a2 2 0 0 0-2 2v10c0 1.1.9 2 2 2h11a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"></path></g></svg></span>
+        <div class="share-icons inline" id="post-end-icons">
+            <a class="twitter" href="https://twitter.com/intent/tweet?text=Docker Setup Guide&url=http://localhost:4000/docker-setup.html" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a class="facebook" href="https://facebook.com/sharer.php?u=http://localhost:4000/docker-setup.html" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a class="reddit" href="http://www.reddit.com/submit?url=http://localhost:4000/docker-setup.html&title=Docker Setup Guide" title="Submit to Reddit" rel="nofollow" target="_blank"><i class="fa fa-reddit" aria-hidden="true"></i></a>
+            <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/docker-setup.html&title=Docker Setup Guide&summary=Quick guide to set up docker&source=http://localhost:4000/docker-setup.html" title="Share on LinkedIn" rel="nofollow" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a class="email" href="mailto:?subject=Docker Setup Guide&body=Quick guide to set up docker%0A%0ARead more here: http://localhost:4000/docker-setup.html" title="Share via e-mail" rel="nofollow" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+            <a class="copy-link" onclick="copyToClipboard()" title="Copy to clipboard" rel="nofollow" target="_blank"><svg width="20px" fill="currentColor" class="inline" viewBox="0 0 18 18"><path d="M16.94 1.1A3.7 3.7 0 0 0 14.3 0c-1 0-1.94.39-2.64 1.1L7.43 5.3c-.91.92-2.09 3.2 0 5.27a.75.75 0 0 0 .82.16c.09-.03.17-.09.24-.15a.74.74 0 0 0 0-1.06c-1.16-1.15-.77-2.39-.02-3.16l4.24-4.22a2.2 2.2 0 0 1 1.58-.65c.6 0 1.16.23 1.58.65.86.87.86 2.29 0 3.16L12.7 8.47a.74.74 0 0 0 1.04 1.05l3.17-3.16a3.73 3.73 0 0 0 0-5.27h.03zM9.54 7.4a.74.74 0 0 0 0 1.06c1.16 1.15.76 2.39 0 3.16l-4.22 4.22c-.42.42-.99.65-1.59.65a2.23 2.23 0 0 1-1.58-3.82l3.17-3.16A.73.73 0 0 0 5.54 9a.78.78 0 0 0-.22-.52.77.77 0 0 0-1.05 0L1.1 11.64A3.72 3.72 0 0 0 3.74 18c1 0 1.94-.39 2.65-1.1l4.23-4.2c.21-.22.94-1.02 1.13-2.2.18-1.12-.2-2.15-1.12-3.07-.27-.27-.78-.27-1.06 0l-.02-.02z" clip-rule="evenodd" fill-rule="evenodd"></path></svg></a>
+        </div>
+    </div>
+    <div class='alert' style='font-size:.6em;color:var(--accent);text-align:center;'></div>
+</div>
+</aside>
+
+        <div class="separator"></div>
+        
+
+
+
+<section class="author-box">
+  <div class="narrow-column">
+    <a href='https://imajician.github.io'><img src="./assets/img/Myself_Neon_grey.jpg" alt="Imajician" class="author-img"></a>
+    <ul class="contact-icons">
+      
+      
+      
+      <li class="github"><a class="github" href="http://github.com/imajician" target="_blank"><i class="fa fa-github"></i></a></li>
+      
+      
+      <li class="email"><a class="email" href="mailto:imajician@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+      
+      
+    </ul>
+  </div>
+  <div class="author-desc">
+    <h3>Imajician</h3>
+    <p>Avid learner with diverse interests in coding, data science, machine learning, openCV, web development, cyber security, radio signal processing, electrical engineering, and reinforcement learning.</p>
+  </div>
+</section>
+
+        
+
+
+
+<div class="recent-box">
+  <h2 class="page-subtitle">Recent posts</h2>
+  <div class="recent-list">
+    
+      
+        <div class="recent-item">
           
-          <a href="./kasm-setup.html" class="post-card-link">
-          Kasm Quick Guide
+          
+
+          <a href="./docker-setup.html" class="recent-item-img" style="background: url('./assets/img/posts/20231019/docker_banner.png') center no-repeat; background-size: cover;">
+            <div class="recent-item-title">
+              <span>Docker Setup Guide</span>
+              
+
+  <span class = "recent-item-meta">
+  
+  
+  
+  
+    
+    
+    <p class="page_meta-readtime">
+      
+        less than 1 minute read
+      
+    </p>
+  
+  
+  </span>
+
+            </div>
           </a>
+        </div>
+      
+    
+      
+        <div class="recent-item">
+          
           
 
-  <span class = "post-card-meta">
+          <a href="./kasm-setup.html" class="recent-item-img" style="background: url('./assets/img/posts/20220816/kasm.jpeg') center no-repeat; background-size: cover;">
+            <div class="recent-item-title">
+              <span>Kasm Quick Guide</span>
+              
+
+  <span class = "recent-item-meta">
   
-  
-    <span class="meta-pre"></span>
   
   
   
     
     
-    <span class="page_meta-readtime">
+    <p class="page_meta-readtime">
       
         2 minute read
       
-    </span>
+    </p>
   
   
   </span>
 
-        </p>
-      </div>
-    </div>
-  </li>
-  
-  
-
-  <li>
-    <div class="post-card">
-      <a href="./ssh-quick-guide.html" title="SSH Quick Guide" class="post-card-image" style="background: url('./assets/img/posts/20220410/ssh-big-825x510.png') center no-repeat; background-size: cover;">
-      </a>
-      <div class="post-card-body">
-        <p class="post-card-title-and-meta">
-          
-          <a href="./ssh-quick-guide.html" class="post-card-link">
-          SSH Quick Guide
+            </div>
           </a>
+        </div>
+      
+    
+      
+        <div class="recent-item">
+          
           
 
-  <span class = "post-card-meta">
+          <a href="./ssh-quick-guide.html" class="recent-item-img" style="background: url('./assets/img/posts/20220410/ssh-big-825x510.png') center no-repeat; background-size: cover;">
+            <div class="recent-item-title">
+              <span>SSH Quick Guide</span>
+              
+
+  <span class = "recent-item-meta">
   
-  
-    <span class="meta-pre"></span>
   
   
   
     
     
-    <span class="page_meta-readtime">
+    <p class="page_meta-readtime">
       
         1 minute read
       
-    </span>
+    </p>
   
   
   </span>
 
-        </p>
-      </div>
-    </div>
-  </li>
-  
-  
-
-  <li>
-    <div class="post-card">
-      <a href="./AI-and-intellectual-property.html" title="Who owns the copyright for an AI generated creative work?" class="post-card-image" style="background: url('./assets/img/posts/20210420/post8-rembrandt.jpg') center no-repeat; background-size: cover;">
-      </a>
-      <div class="post-card-body">
-        <p class="post-card-title-and-meta">
-          
-          <a href="./AI-and-intellectual-property.html" class="post-card-link">
-          Who owns the copyright for an AI generated creative work?
+            </div>
           </a>
+        </div>
+      
+    
+      
+        <div class="recent-item">
+          
           
 
-  <span class = "post-card-meta">
+          <a href="./AI-and-intellectual-property.html" class="recent-item-img" style="background: url('./assets/img/posts/20210420/post8-rembrandt.jpg') center no-repeat; background-size: cover;">
+            <div class="recent-item-title">
+              <span>Who owns the copyright for an AI generated creative work?</span>
+              
+
+  <span class = "recent-item-meta">
   
-  
-    <span class="meta-pre"></span>
   
   
   
     
     
-    <span class="page_meta-readtime">
+    <p class="page_meta-readtime">
       
         4 minute read
       
-    </span>
+    </p>
   
   
   </span>
 
-        </p>
-      </div>
-    </div>
-  </li>
-  
-  
-
-  <li>
-    <div class="post-card">
-      <a href="./back-to-basics.html" title="So, what is a neural network?" class="post-card-image" style="background: url('./assets/img/posts/20210402/post7-header.webp') center no-repeat; background-size: cover;">
-      </a>
-      <div class="post-card-body">
-        <p class="post-card-title-and-meta">
-          
-          <a href="./back-to-basics.html" class="post-card-link">
-          So, what is a neural network?
+            </div>
           </a>
-          
-
-  <span class = "post-card-meta">
-  
-  
-    <span class="meta-pre"></span>
-  
-  
-  
-    
-    
-    <span class="page_meta-readtime">
+        </div>
       
-        9 minute read
-      
-    </span>
-  
-  
-  </span>
+    
+  </div>
+</div> <!-- End Recent-Box -->
 
-        </p>
+        <!--
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="page-subtitle">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
       </div>
-    </div>
-  </li>
-  
-  
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
 
-  <li>
-    <div class="post-card">
-      <a href="./starting-the-adventure.html" title="Starting the adventure" class="post-card-image" style="background: url('./assets/img/posts/20210324/starting_adventure.jpg') center no-repeat; background-size: cover;">
-      </a>
-      <div class="post-card-body">
-        <p class="post-card-title-and-meta">
-          
-          <a href="./starting-the-adventure.html" class="post-card-link">
-          Starting the adventure
-          </a>
-          
+        
 
-  <span class = "post-card-meta">
-  
-  
-    <span class="meta-pre"></span>
-  
-  
-  
-    
-    
-    <span class="page_meta-readtime">
-      
-        10 minute read
-      
-    </span>
-  
-  
-  </span>
-
-        </p>
+        -->
       </div>
-    </div>
-  </li>
-  
-</ol>
-
-    <div class="search-box">
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
   <div class="wrapper">
     <div class="search-grid">
       <form class="search-form">
@@ -470,71 +654,6 @@
   </div>
 </div>
 
-    <div class="pagination clearfix">
-  
-  
-    <a href="../page2" class="next">Next <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-  
-</div>
-
-    <div class="center-tags">
-      
-
-      
-
-
-
-<div class="tag-cloud">
-    
-        <ul class="tags">
-            
-                
-                <li><a href="./tag.html?tag=artificial+intelligence" class="tag">artificial intelligence <span>(4)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=coding" class="tag">coding <span>(5)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=copyright" class="tag">copyright <span>(4)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=creativity" class="tag">creativity <span>(4)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=deep+Neural+networks" class="tag">deep Neural networks <span>(1)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=general+blogging" class="tag">general blogging <span>(1)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=life" class="tag">life <span>(1)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=machine+learning" class="tag">machine learning <span>(7)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=neural+networks" class="tag">neural networks <span>(5)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=optimization" class="tag">optimization <span>(1)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=python" class="tag">python <span>(3)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=reinforcement+learning" class="tag">reinforcement learning <span>(1)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=thoughts" class="tag">thoughts <span>(1)</span></a></li>
-            
-                
-                <li><a href="./tag.html?tag=virtual+machine" class="tag">virtual machine <span>(2)</span></a></li>
-            
-    
-        </ul>
-</div>
-    </div>
-  </div> <!-- End Wrapper -->
   
 
 
@@ -570,7 +689,8 @@
     </div>
 </footer> <!-- End Footer -->
 
-</div><!-- End flex-container -->
+</div>
+
     <div class="top" title="Top">
       <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="angle-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-angle-up fa-w-8 fa-2x"><path fill="currentColor" d="M136.5 185.1l116 117.8c4.7 4.7 4.7 12.3 0 17l-7.1 7.1c-4.7 4.7-12.3 4.7-17 0L128 224.7 27.6 326.9c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17l116-117.8c4.7-4.6 12.3-4.6 17 .1z" class=""></path></svg>
     </div>
@@ -691,6 +811,62 @@
 <script src="./assets/js/jekyll-search.js"></script>
 <script src="./assets/js/jquery-3.6.0.min.js"></script>
 
+
+  <script>
+    function toggle_comments(){
+        document.getElementById('comment-curtain').classList.toggle('hide')
+        document.getElementById('disqus_thread').classList.toggle('show')
+    }
+
+    function copyToClipboard() {
+      navigator.clipboard.writeText('http://localhost:4000/docker-setup.html').then(function() {
+      alerts = document.getElementsByClassName('alert')
+      for (i=0; i < alerts.length; i++){
+        alerts[i].innerHTML='\u00ABlink copied\u00BB';
+        setTimeout((function(i){ return function(){alerts[i].innerHTML='';}})(i), 1600 );
+      };
+      }, function() {
+        prompt("Unable to copy, please use this link:", "http://localhost:4000/docker-setup.html");
+      });
+    }
+
+    $(function () {
+      if (document.getElementById('comment-curtain') == null){
+        document.getElementById('disqus_thread').classList.toggle('show')
+      }
+
+      var tweetTags = document.getElementsByTagName("tweet");
+
+      if (tweetTags != null){
+        for (i=0; i<tweetTags.length; i++){
+          tweetA = document.createElement("a")
+          tweetA.href = 'https://twitter.com/share?text='
+                       + encodeURIComponent(tweetTags[i].textContent)
+                       + '&via=&url='
+                       + window.location.href;
+          tweetA.target = "_blank";
+          tweetA.className = 'twitter';
+          tweetSpanText = document.createElement('span');
+          tweetSpanText.className = 'tweetText';
+          tweetSpanText.appendChild(document.createTextNode(tweetTags[i].textContent));
+          tweetSpanIcon = document.createElement('span');
+          tweetSpanIcon.className = 'tweetIcon';
+          tweetSpanIcon.appendChild(document.createTextNode("click to tweet"));
+          tweetI = document.createElement("i");
+          tweetI.className = 'fa fa-twitter';
+          tweetSpanIcon.appendChild(tweetI);
+          tweetA.appendChild(tweetSpanText);
+          tweetA.appendChild(tweetSpanIcon);
+          tweetTags[i].textContent = "";
+          tweetTags[i].appendChild(tweetA);
+        }
+      }
+
+    });
+
+  </script>
+  <!-- Mailchimp linking -->
+  <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/8ece198b3eb260e6838461a60/d20d9fb9aad962399025da52e.js");</script>
 
 
 
