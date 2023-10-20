@@ -176,8 +176,6 @@ $ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /
 
 3. URL: 
 >http://localhost:9000
-   
-<br>
 
 ### Update
 1. Remove old version:
@@ -196,3 +194,6 @@ $ docker run -d -p 8000:8000 -p 9443:9443 --name=portainer --restart=always -v /
 3. URL: 
 >http://localhost:9443
 
+<br>
+
+## Postgresql
