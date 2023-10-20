@@ -157,6 +157,28 @@ $ docker network create -d overlay --attachable --name my-attachable-overlay
 $ docker run -itd --rm --network none --name busybox9 busybox
 ```
 
+### Connect and disconnect network
+- Connect network to a container
+```bash
+$ docker network connect network1 busybox1
+```
+
+- Disconnect network from a container
+```bash
+$ docker network disconnect mynetwork1 busybox1
+```
+
+### Remove network
+```bash
+$ docker network ls
+$ docker network remove mynetwork2
+```
+
+### Remove all unused networks
+```bash 
+$ docker network prune
+```
+
 <br>
 
 ## Portainer
@@ -197,3 +219,13 @@ $ docker run -d -p 8000:8000 -p 9443:9443 --name=portainer --restart=always -v /
 <br>
 
 ## Postgresql
+---------------
+- Start a docker Postgresql server
+```bash
+$ docker run --name some-postgres -p 5432:5432 -e POSTGRES_USER=backend_stuff -e POSTGRES_PASSWORD=secret_password -d postgres
+```
+
+- Hide password
+```bash 
+$ docker run --name some-postgres -e POSTGRES_PASSWORD_FILE=/run/secrets/postgres-passwd -d postgres
+```
