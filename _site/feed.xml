@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-10-19T20:33:37-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Minimum Viable Model</title><subtitle>Computer Stuff.</subtitle><author><name>Imajician</name></author><entry><title type="html">Docker Setup Guide</title><link href="http://localhost:4000/docker-setup.html" rel="alternate" type="text/html" title="Docker Setup Guide" /><published>2023-10-19T00:00:00-07:00</published><updated>2023-10-19T00:00:00-07:00</updated><id>http://localhost:4000/docker-setup</id><content type="html" xml:base="http://localhost:4000/docker-setup.html"><![CDATA[<h2 id="preparation">Preparation</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-10-19T21:39:42-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Minimum Viable Model</title><subtitle>Computer Stuff.</subtitle><author><name>Imajician</name></author><entry><title type="html">Docker Setup Guide</title><link href="http://localhost:4000/docker-setup.html" rel="alternate" type="text/html" title="Docker Setup Guide" /><published>2023-10-19T00:00:00-07:00</published><updated>2023-10-19T00:00:00-07:00</updated><id>http://localhost:4000/docker-setup</id><content type="html" xml:base="http://localhost:4000/docker-setup.html"><![CDATA[<h2 id="preparation">Preparation</h2>
 <hr />
 
 <p><a href="https://docs.docker.com/get-docker/">Official Installation Page</a></p>
@@ -29,17 +29,118 @@
 <h2 id="network">Network</h2>
 <hr />
 <h3 id="default-bridge">Default Bridge</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network <span class="nb">ls</span>
-</code></pre></div></div>
+
+<ol>
+  <li>check available networks:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network <span class="nb">ls
+</span>NETWORK ID     NAME      DRIVER    SCOPE
+5077a7b25ae6   bridge    bridge    <span class="nb">local
+</span>7e25f334b07f   host      host      <span class="nb">local
+</span>475e50be0fe0   none      null      <span class="nb">local</span>
+</code></pre></div>    </div>
+  </li>
+  <li>start two containers:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-dit</span> <span class="nt">--name</span> busybox1 busybox /bin/sh
+<span class="nv">$ </span>docker run <span class="nt">-dit</span> <span class="nt">-p</span> 80:80 <span class="nt">--name</span> busybox2 busybox /bin/sh
+<span class="nv">$ </span>docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+9e6464e82c4c   busybox   <span class="s2">"/bin/sh"</span>   5 seconds ago    Up 5 seconds              busybox2
+7fea14032748   busybox   <span class="s2">"/bin/sh"</span>   26 seconds ago   Up 26 seconds             busybox1 
+</code></pre></div>    </div>
+  </li>
+  <li>Verify the containers are attached to the bridge network
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network inspect bridge
+</code></pre></div>    </div>
+  </li>
+</ol>
 
 <h3 id="user-defined-bridge">User-Defined Bridge</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<ol>
+  <li>Create and remove network
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network create mynetwork1
+<span class="nv">$ </span>docker network <span class="nb">ls</span>
+<span class="nv">$ </span>docker network remove mynetwork1
+</code></pre></div>    </div>
+  </li>
+  <li>Run container:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--rm</span> <span class="nt">--network</span> mynetwork1 <span class="nt">--name</span> busybox3 busybox 
+<span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--rm</span> <span class="nt">--network</span> mynetwork1 <span class="nt">--name</span> busybox4 busybox 
+<span class="nv">$ </span>docker ps
+<span class="nv">$ </span>docker network inspect mynetwork1
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="host">Host</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--rm</span> <span class="nt">--network</span> host <span class="nt">--name</span> busybox5 nginx
+// ports exposed, no network isolation
+</code></pre></div></div>
 
 <h3 id="macvlan">MACVLAN</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<ol>
+  <li>Create macvlan
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network create <span class="nt">-d</span> macvlan <span class="nt">--subnet</span> 192.168.0.0/24 <span class="nt">--gateway</span> 192.168.0.1 <span class="nt">-o</span> <span class="nv">parent</span><span class="o">=</span>enp0s3 <span class="nt">--name</span> mynetwork2 
+</code></pre></div>    </div>
+  </li>
+  <li>Enable promiscous mode:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>ip <span class="nb">link set </span>enp0s3 promisc on
+// also <span class="nb">enable </span>promiscous mode <span class="k">in </span>virtualbox
+</code></pre></div>    </div>
+  </li>
+  <li>Run container on this network
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--rm</span> <span class="nt">--network</span> mynetwork2 <span class="nt">--ip</span> 192.168.0.123 <span class="nt">--name</span> busybox6 busybox 
+<span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--rm</span> <span class="nt">--network</span> mynetwork2 <span class="nt">--ip</span> 192.168.0.124 <span class="nt">--name</span> busybox6 nginx 
+<span class="nv">$ </span>docker  <span class="nb">exec</span> <span class="nt">-it</span> busybox6 sh
+/# ping 192.168.0.1  
+</code></pre></div>    </div>
+  </li>
+  <li>Remove the network
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network remove mynetwork2
+</code></pre></div>    </div>
+  </li>
+  <li>Alternative:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nv">$ </span>docker network create <span class="nt">-d</span> macvlan <span class="nt">--subnet</span> 192.168.20.0/24 <span class="nt">--gateway</span> 192.168.20.1 <span class="nt">-o</span> <span class="nv">parent</span><span class="o">=</span>enp0s3.20 <span class="nt">--name</span> mynetwork2    
+</code></pre></div>    </div>
+  </li>
+</ol>
 
 <h3 id="ipvlan">IPVLAN</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<ol>
+  <li>Share Mac Address with host, with different IP addresses
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network create <span class="nt">-d</span> ipvlan <span class="nt">--subnet</span> 192.168.0.0/24 <span class="nt">--gateway</span> 192.168.0.1 <span class="nt">-o</span> <span class="nv">parent</span><span class="o">=</span>enp0s3 <span class="nt">--name</span> mynetwork3 
+</code></pre></div>    </div>
+  </li>
+  <li>Use the host as a router
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create <span class="nt">-d</span> ipvlan <span class="nt">--subnet</span> 192.168.94.0/24 <span class="nt">-o</span> <span class="nv">parent</span><span class="o">=</span>enp0s3 <span class="nt">-o</span> <span class="nv">ipvlan_mode</span><span class="o">=</span>l3 <span class="nt">--subnet</span> 192.168.95.0/24 <span class="nt">--name</span> mynetwork4 
+</code></pre></div>    </div>
+  </li>
+  <li>Assign IP to container
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--rm</span> <span class="nt">--network</span> mynetwork4 <span class="nt">--ip</span> 192.168.94.7 <span class="nt">--busybox7</span> busybox
+<span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--rm</span> <span class="nt">--network</span> mynetwork4 <span class="nt">--ip</span> 192.168.94.8 <span class="nt">--busybox8</span> busybox
+</code></pre></div>    </div>
+  </li>
+  <li>Inspect network
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network inspect mynetwork4
+</code></pre></div>    </div>
+  </li>
+  <li>Establish static route in router</li>
+</ol>
+
+<h3 id="overlay-network">Overlay Network</h3>
+<ul>
+  <li>Standalone overlay network
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network create <span class="nt">-d</span> overlay <span class="nt">--name</span> my-overlay-network
+</code></pre></div>    </div>
+  </li>
+  <li>Attachable overlay network
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network create <span class="nt">-d</span> overlay <span class="nt">--attachable</span> <span class="nt">--name</span> my-attachable-overlay
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="none-network">None network</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-itd</span> <span class="nt">--rm</span> <span class="nt">--network</span> none <span class="nt">--name</span> busybox9 busybox
+</code></pre></div></div>
 
 <p><br /></p>
 

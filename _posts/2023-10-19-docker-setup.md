@@ -41,20 +41,120 @@ $ brew install --cask docker
 ## Network
 -----------------
 ### Default Bridge
+
+1. check available networks:
 ```bash
 $ docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+5077a7b25ae6   bridge    bridge    local
+7e25f334b07f   host      host      local
+475e50be0fe0   none      null      local
+```
+
+2. start two containers:
+```bash
+$ docker run -dit --name busybox1 busybox /bin/sh
+$ docker run -dit -p 80:80 --name busybox2 busybox /bin/sh
+$ docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+9e6464e82c4c   busybox   "/bin/sh"   5 seconds ago    Up 5 seconds              busybox2
+7fea14032748   busybox   "/bin/sh"   26 seconds ago   Up 26 seconds             busybox1 
+```
+
+4. Verify the containers are attached to the bridge network
+```bash
+$ docker network inspect bridge
 ```
 
 ### User-Defined Bridge
+1. Create and remove network
 ```bash
+$ docker network create mynetwork1
+$ docker network ls
+$ docker network remove mynetwork1
+```
+
+2. Run container:
+```bash
+$ docker run -itd --rm --network mynetwork1 --name busybox3 busybox 
+$ docker run -itd --rm --network mynetwork1 --name busybox4 busybox 
+$ docker ps
+$ docker network inspect mynetwork1
+```
+
+### Host
+```bash
+$ docker run -itd --rm --network host --name busybox5 nginx
+// ports exposed, no network isolation
 ```
 
 ### MACVLAN
+1. Create macvlan
 ```bash
+$ docker network create -d macvlan --subnet 192.168.0.0/24 --gateway 192.168.0.1 -o parent=enp0s3 --name mynetwork2 
+```
+
+2. Enable promiscous mode:
+```bash
+$ sudo ip link set enp0s3 promisc on
+// also enable promiscous mode in virtualbox
+```
+
+3. Run container on this network
+```bash
+$ docker run -itd --rm --network mynetwork2 --ip 192.168.0.123 --name busybox6 busybox 
+$ docker run -itd --rm --network mynetwork2 --ip 192.168.0.124 --name busybox6 nginx 
+$ docker  exec -it busybox6 sh
+/# ping 192.168.0.1  
+```
+
+4. Remove the network
+```bash
+$ docker network remove mynetwork2
+```
+5. Alternative:
+```bash
+ $ docker network create -d macvlan --subnet 192.168.20.0/24 --gateway 192.168.20.1 -o parent=enp0s3.20 --name mynetwork2    
 ```
 
 ### IPVLAN
+1. Share Mac Address with host, with different IP addresses
 ```bash
+$ docker network create -d ipvlan --subnet 192.168.0.0/24 --gateway 192.168.0.1 -o parent=enp0s3 --name mynetwork3 
+```
+
+2. Use the host as a router
+```bash
+docker network create -d ipvlan --subnet 192.168.94.0/24 -o parent=enp0s3 -o ipvlan_mode=l3 --subnet 192.168.95.0/24 --name mynetwork4 
+```
+
+3. Assign IP to container
+```bash
+$ docker run -itd --rm --network mynetwork4 --ip 192.168.94.7 --busybox7 busybox
+$ docker run -itd --rm --network mynetwork4 --ip 192.168.94.8 --busybox8 busybox
+```
+
+4. Inspect network
+```bash
+docker network inspect mynetwork4
+```
+
+5. Establish static route in router 
+
+### Overlay Network 
+- Standalone overlay network
+```bash
+$ docker network create -d overlay --name my-overlay-network
+```
+
+- Attachable overlay network
+```bash
+$ docker network create -d overlay --attachable --name my-attachable-overlay
+```
+
+### None network
+```bash
+$ docker run -itd --rm --network none --name busybox9 busybox
 ```
 
 <br>
