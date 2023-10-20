@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-10-19T20:25:02-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Minimum Viable Model</title><subtitle>Computer Stuff.</subtitle><author><name>Imajician</name></author><entry><title type="html">Docker Setup Guide</title><link href="http://localhost:4000/docker-setup.html" rel="alternate" type="text/html" title="Docker Setup Guide" /><published>2023-10-19T00:00:00-07:00</published><updated>2023-10-19T00:00:00-07:00</updated><id>http://localhost:4000/docker-setup</id><content type="html" xml:base="http://localhost:4000/docker-setup.html"><![CDATA[<h2 id="preparation">Preparation</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-10-19T20:33:37-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Minimum Viable Model</title><subtitle>Computer Stuff.</subtitle><author><name>Imajician</name></author><entry><title type="html">Docker Setup Guide</title><link href="http://localhost:4000/docker-setup.html" rel="alternate" type="text/html" title="Docker Setup Guide" /><published>2023-10-19T00:00:00-07:00</published><updated>2023-10-19T00:00:00-07:00</updated><id>http://localhost:4000/docker-setup</id><content type="html" xml:base="http://localhost:4000/docker-setup.html"><![CDATA[<h2 id="preparation">Preparation</h2>
 <hr />
 
 <p><a href="https://docs.docker.com/get-docker/">Official Installation Page</a></p>
@@ -25,6 +25,23 @@
     <p><br /></p>
   </li>
 </ul>
+
+<h2 id="network">Network</h2>
+<hr />
+<h3 id="default-bridge">Default Bridge</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker network <span class="nb">ls</span>
+</code></pre></div></div>
+
+<h3 id="user-defined-bridge">User-Defined Bridge</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+<h3 id="macvlan">MACVLAN</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+<h3 id="ipvlan">IPVLAN</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+<p><br /></p>
 
 <h2 id="portainer">Portainer</h2>
 <hr />
